@@ -1,12 +1,13 @@
-
-import { Button } from 'primereact/button';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HomeView } from './view/HomeView';
 
 function App() {
   return (
-    <>
-      <Button label="Submit" />
-      <h1>Hello</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeView />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
