@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HomeView } from './view/HomeView';
+import { UserDashboard } from './user/UserDashboard';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeView />} />
+        <Route path="/" element={<UserDashboard />} />
       </Routes>
     </BrowserRouter>
   );
