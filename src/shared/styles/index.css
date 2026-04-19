@@ -12,6 +12,7 @@ code {
     monospace;
 }
 
+/* product image styles */
 .product-image-wrapper {
   position: relative;
   overflow: hidden;
@@ -49,6 +50,8 @@ code {
   transform: scale(1.03);
   filter: blur(1px);
 }
+
+/* end of product image styles */
 
 /* Custom Carousel Styles - Navigation arrows only */
 .custom-carousel .p-carousel-prev,
