@@ -1,13 +1,18 @@
-import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { useState } from 'react';
 import { PrimeBadge } from '../../../shared/common/PrimeBadge/PrimeBadge';
 import { InputNumber } from 'primereact/inputnumber';
+import { useParams } from 'react-router-dom';
+import { products } from '../Products/productHelper';
 
-export const ProductDetails = ({ product, visible, onHide }) => {
+export const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1);
+    const { id } = useParams();
 
-    if (!product) return null;
+    // In a real application, you would fetch the product details based on the ID
+    const product = products.find((p) => p.id === parseInt(id));
+
+    if (!product) return (<h1>No Product Found</h1>);
 
     const sectionStyle = {
         backgroundColor: '#f9f9f9',
@@ -16,38 +21,31 @@ export const ProductDetails = ({ product, visible, onHide }) => {
         marginBottom: '20px'
     }
 
-    const footer = (
-        <div className='flex align-items-center justify-content-end mt-3 gap-3'>
+    const btnCollection = (
+        <div className='flex align-items-center justify-content-start mt-3 gap-3'>
             <Button
                 label="Add to Cart"
                 icon="pi pi-shopping-cart"
+                outlined={true}
                 onClick={() => console.log(`Added ${quantity} of ${product.title} to cart`)}
             />
             <Button
-                label="Close"
-                icon="pi pi-times"
-                onClick={onHide}
+                label="Buy Now"
+                icon="pi pi-credit-card"
+                onClick={() => console.log(`Buying ${quantity} of ${product.title}`)}
             />
         </div>
     );
 
     return (
-        <Dialog
-            visible={visible}
-            onHide={onHide}
-            header={product.title}
-            modal
-            style={{ width: '90vw', maxWidth: '1000px' }}
-            maximizable
-            footer={footer}
-        >
-            <div className='grid mb-4'>
+        <>
+            <div className='grid mt-2'>
                 {/* Product Image */}
                 <div className='col-12 md:col-6'>
                     <img
                         src={product.image}
                         alt={product.title}
-                        className="w-full h-22rem"
+                        className="w-full h-24rem"
                     />
                 </div>
 
@@ -59,35 +57,40 @@ export const ProductDetails = ({ product, visible, onHide }) => {
 
                     {/* Pricing Section */}
                     <div style={sectionStyle}>
-                        <strong>Old Price:</strong>
-                        <span className="line-through ml-2 text-700">
-                            ${product.old_price}
-                        </span>
-                        <p style={{ fontSize: '2em', color: '#28a745', marginBottom: '10px' }}>
-                            <strong>New Price:</strong> ${product.new_price}
-                        </p>
-                        <PrimeBadge value={`${product.discount}% OFF`} severity="warning" className="text-sm" />
-                        <p className='mt-3'>
-                            <strong>Price Per Quantity:</strong> ${product.price_per_quantity}
-                        </p>
-                    </div>
+                        <PrimeBadge value={"OFFER"} severity="warning" className="text-sm" />
 
-                    {/* Quantity Selector */}
-                    <div className="flex-auto">
-                        <label htmlFor="horizontal-buttons" className="font-bold block mb-2">Quantity:</label>
-                        <InputNumber
-                            inputId="horizontal-buttons"
-                            value={quantity}
-                            onValueChange={(e) => setQuantity(e.value)}
-                            showButtons
-                            buttonLayout="horizontal"
-                            decrementButtonClassName="p-button-primary"
-                            incrementButtonClassName="p-button-primary"
-                            incrementButtonIcon="pi pi-plus"
-                            decrementButtonIcon="pi pi-minus"
-                            inputClassName="w-3rem"
-                        />
+                        <div className='flex justify-content-left align-items-center gap-2 mb-2 mt-2'>
+                            <div className="font-bold" style={{ fontSize: '2em', color: '#28a745' }}>
+                                ₹{product.discount}% OFF
+                            </div>
+                            <span className="line-through ml-2 text-700" style={{ fontSize: '2em', color: '#28a745' }}>
+                                ₹{product.old_price}
+                            </span>
+                            <span className='font-bold' style={{ fontSize: '2em', color: '#28a745' }}>
+                                ₹{product.new_price}
+                            </span>
+                        </div>
+                        {/* Quantity Selector */}
+                        <div className="flex-auto">
+                            <label htmlFor="horizontal-buttons" className="font-bold block mb-2">Quantity:</label>
+                            <InputNumber
+                                inputId="horizontal-buttons"
+                                value={quantity}
+                                onValueChange={(e) => setQuantity(e.value)}
+                                showButtons
+                                buttonLayout="horizontal"
+                                decrementButtonClassName="p-button-primary"
+                                incrementButtonClassName="p-button-primary"
+                                incrementButtonIcon="pi pi-plus"
+                                decrementButtonIcon="pi pi-minus"
+                                inputClassName="w-3rem"
+                            />
+                        </div>
+                        <p className='mt-3 -mb-2' style={{ color: "#9e9b9b" }}>
+                            <strong>Price Per Quantity:</strong> ₹{product.price_per_quantity}
+                        </p>
                     </div>
+                    {btnCollection}
                 </div>
             </div>
 
@@ -135,6 +138,6 @@ export const ProductDetails = ({ product, visible, onHide }) => {
                 </p>
                 <p style={{ color: '#666' }}>{product.faqs}</p>
             </div>
-        </Dialog>
+        </>
     );
 };

@@ -77,6 +77,7 @@ export const products = [
     }
 ];
 
+
 export const buttonConfigs = [
     {
         label: "Details",
@@ -97,12 +98,12 @@ export const buttonConfigs = [
 
 
 
-export const cardContent = (product, handleViewDetails) => {
+export const cardContent = (product, navigate) => {
     const header = (
         <div
             className="product-image-wrapper"
             onClick={() => {
-                handleViewDetails(product);
+                navigate(`productDetails/${product.id}`)
             }}
         >
             <img
@@ -130,7 +131,7 @@ export const cardContent = (product, handleViewDetails) => {
     const footer = (
         <div className='flex align-items-center justify-content-center mt-3'>
             {buttonConfigs.map((config) => (
-                <PrimeButton {...config} onClick={config.label === "Details" ? () => handleViewDetails(product) : config.onClick} />
+                <PrimeButton {...config} onClick={config.label === "Details" ? () => navigate(`productDetails/${product.id}`) : config.onClick} />
             ))}
         </div>
     );
