@@ -5,6 +5,7 @@ import { PrimeBadge } from '../PrimeBadge/PrimeBadge';
 import { PrimeButton } from '../PrimeButton/PrimeButton';
 import { buttonConfigs, items, profileMenuItems, start } from './navbarHelper';
 import { PrimeAvatar } from '../PrimeAvatar/PrimeAvatar';
+import { Footer } from '../Footer/Footer';
 
 const NavBar = ({ children }) => {
     const isAuthenticated = true; // Replace with actual auth logic
@@ -46,8 +47,9 @@ const NavBar = ({ children }) => {
 
     return (
         <>
-            <Menubar model={items} start={start} end={end} />
+            <Menubar model={items} start={start} end={end} className='border-noround' />
             {children}
+            <Footer />
         </>
     );
 };
