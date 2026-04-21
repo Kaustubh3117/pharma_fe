@@ -43,11 +43,6 @@ export const ProductDetails = () => {
             <div className='grid mt-2'>
                 {/* Product Image */}
                 <div className='col-12 md:col-6'>
-                    {/* <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-full h-24rem"
-                    /> */}
                     <ImageSwitcher />
                 </div>
 
