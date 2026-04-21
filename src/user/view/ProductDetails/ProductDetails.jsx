@@ -4,6 +4,7 @@ import { PrimeBadge } from '../../../shared/common/PrimeBadge/PrimeBadge';
 import { InputNumber } from 'primereact/inputnumber';
 import { useParams } from 'react-router-dom';
 import { products } from '../Products/productHelper';
+import ImageSwitcher from './ImageSwitcher/ImageSwitcher';
 
 export const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1);
@@ -42,11 +43,12 @@ export const ProductDetails = () => {
             <div className='grid mt-2'>
                 {/* Product Image */}
                 <div className='col-12 md:col-6'>
-                    <img
+                    {/* <img
                         src={product.image}
                         alt={product.title}
                         className="w-full h-24rem"
-                    />
+                    /> */}
+                    <ImageSwitcher />
                 </div>
 
                 {/* Product Info */}
@@ -78,6 +80,7 @@ export const ProductDetails = () => {
                                 value={quantity}
                                 onValueChange={(e) => setQuantity(e.value)}
                                 showButtons
+                                min={0}
                                 buttonLayout="horizontal"
                                 decrementButtonClassName="p-button-primary"
                                 incrementButtonClassName="p-button-primary"

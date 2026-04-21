@@ -48,7 +48,9 @@ const NavBar = ({ children }) => {
     return (
         <>
             <Menubar model={items} start={start} end={end} className='border-noround' />
-            {children}
+            <div className='ml-2 mr-2'>
+                {children}
+            </div>
             <Footer />
         </>
     );

@@ -12,7 +12,6 @@ function App() {
           <Routes>
             <Route path="/" element={<UserHome />} />
             <Route path="productDetails/:id" element={<ProductDetails />} />
-
           </Routes>
         </BrowserRouter>
       </NavBar>
