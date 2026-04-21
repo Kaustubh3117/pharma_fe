@@ -3,9 +3,17 @@ import { cardContent, products } from './productHelper';
 //All Shared Imports
 import { PrimeCard } from '../../../shared/common/PrimeCard/PrimeCard';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getCombinedProductDetails } from '../../store/actions/productAction/productAction';
 
 export const Products = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getCombinedProductDetails())
+    }, [dispatch])
 
     return (
         <>

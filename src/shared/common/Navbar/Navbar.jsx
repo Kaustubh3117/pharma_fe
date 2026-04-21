@@ -32,7 +32,7 @@ const NavBar = ({ children }) => {
             <span className="p-overlay-badge" style={{ position: 'relative' }}>
                 <i className="pi pi-shopping-cart" style={{ fontSize: '2rem', cursor: 'pointer' }}
                     onClick={() => window.location.href = '/cart'} />
-                <PrimeBadge value={3} severity="danger" />
+                <PrimeBadge value={0} severity="danger" />
             </span>
 
             {!isAuthenticated && (
