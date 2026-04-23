@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { Menu } from 'primereact/menu';
 import { PrimeBadge } from '../PrimeBadge/PrimeBadge';
@@ -6,10 +6,18 @@ import { PrimeButton } from '../PrimeButton/PrimeButton';
 import { buttonConfigs, items, profileMenuItems, start } from './navbarHelper';
 import { PrimeAvatar } from '../PrimeAvatar/PrimeAvatar';
 import { Footer } from '../Footer/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCartCount } from '../../../user/store/actions/cartAction/cartAction';
 
 const NavBar = ({ children }) => {
     const isAuthenticated = true; // Replace with actual auth logic
+    const cartCount = useSelector((state) => state.user.cart.cartCount); // Replace with actual cart count from state
     const menuRef = useRef(null);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCartCount(1))
+    }, [dispatch]);
 
     const avatarContent = {
         label: 'KP',
@@ -32,7 +40,7 @@ const NavBar = ({ children }) => {
             <span className="p-overlay-badge" style={{ position: 'relative' }}>
                 <i className="pi pi-shopping-cart" style={{ fontSize: '2rem', cursor: 'pointer' }}
                     onClick={() => window.location.href = '/cart'} />
-                <PrimeBadge value={0} severity="danger" />
+                <PrimeBadge value={cartCount} severity="danger" />
             </span>
 
             {!isAuthenticated && (
