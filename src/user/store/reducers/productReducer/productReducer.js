@@ -1,7 +1,8 @@
-import { SET_COMBINED_PRODUCT_DETAILS } from "../../constants/productConstants/productConstants";
+import { SET_COMBINED_PRODUCT_DETAILS, SET_PRODUCT_BY_ID } from "../../constants/productConstants/productConstants";
 
 const initialStore = {
     combinedProductDetails: null,
+    productDetailsById: null,
 }
 
 const productReducer = (state = initialStore, action) => {
@@ -11,6 +12,11 @@ const productReducer = (state = initialStore, action) => {
                 ...state,
                 combinedProductDetails: action.payload,
             };
+        case SET_PRODUCT_BY_ID:
+            return {
+                ...state,
+                productDetailsById: action.payload,
+            }
         default:
             return state;
     }

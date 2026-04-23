@@ -1,7 +1,14 @@
-import { GET_COMBINED_PRODUCT_DETAILS } from "../../constants/productConstants/productConstants";
+import { GET_COMBINED_PRODUCT_DETAILS, GET_PRODUCT_BY_ID } from "../../constants/productConstants/productConstants";
 
 export const getCombinedProductDetails = () => {
     return {
         type: GET_COMBINED_PRODUCT_DETAILS,
+    };
+};
+
+export const getProductById = (id) => {
+    return {
+        type: GET_PRODUCT_BY_ID,
+        payload: id
     };
 };
