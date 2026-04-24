@@ -13,4 +13,4 @@ const store = configureStore({
 
 sagaMiddleware.run(combinedSagas);
 
-export const rootStore = store;
+export const configStore = store;

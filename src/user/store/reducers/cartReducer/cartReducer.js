@@ -1,4 +1,4 @@
-import { SET_CART_COUNT } from "../../constants/cartConstants/cartConstants";
+import { SET_CART_COUNT } from "../../actionTypes/cartConstants/cartConstants";
 
 const initialState = {
     cartCount: 0,

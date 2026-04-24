@@ -1,4 +1,4 @@
-import { GET_CART_COUNT } from "../../constants/cartConstants/cartConstants";
+import { GET_CART_COUNT } from "../../actionTypes/cartConstants/cartConstants";
 
 export const getCartCount = (user_id) => {
     return {

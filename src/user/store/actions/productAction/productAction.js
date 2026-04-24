@@ -1,4 +1,4 @@
-import { GET_COMBINED_PRODUCT_DETAILS, GET_PRODUCT_BY_ID } from "../../constants/productConstants/productConstants";
+import { GET_COMBINED_PRODUCT_DETAILS, GET_PRODUCT_BY_ID } from "../../actionTypes/productConstants/productConstants";
 
 export const getCombinedProductDetails = () => {
     return {

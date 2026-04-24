@@ -1,4 +1,4 @@
-import { SET_COMBINED_PRODUCT_DETAILS, SET_PRODUCT_BY_ID } from "../../constants/productConstants/productConstants";
+import { SET_COMBINED_PRODUCT_DETAILS, SET_PRODUCT_BY_ID } from "../../actionTypes/productConstants/productConstants";
 
 const initialStore = {
     combinedProductDetails: null,

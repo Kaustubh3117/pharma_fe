@@ -1,20 +1,23 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './shared/styles/index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
+import { configStore } from './configStore/configStore';
 
-//import primereact and primeicons
+/* custom components */
+import './shared/styles/index.css';
+import App from './App';
+
+/* import primereact and primeicons */
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import { rootStore } from './store/rootStore';
+import { PrimeToast } from './shared/common/PrimeToast/PrimeToast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={rootStore}>
+  <Provider store={configStore}>
+    <PrimeToast />
     <App />
   </Provider>
 );

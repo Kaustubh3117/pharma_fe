@@ -1,4 +1,4 @@
-import { env } from "../config";
+import { env } from "../shared/utils/config";
 
 const apiURL = env === 'PROD' ? process.env.REACT_APP_PROD_BACKEND_URL : process.env.REACT_APP_LOCAL_BACKEND_URL;
 
