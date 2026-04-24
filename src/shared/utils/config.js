@@ -1,1 +1,1 @@
-export const env = "LOCAL" //"PROD", "LOCAL", "DEV"
+export const env = "PROD" //"PROD", "LOCAL", "DEV"
