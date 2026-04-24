@@ -8,6 +8,7 @@ export const items = [
         label: 'Products',
         icon: 'pi pi-box',
         items: [
+            { label: 'All Products', icon: 'pi pi-box', command: () => { window.location.href = '/products'; } },
             { label: 'Categories', icon: 'pi pi-list', command: () => { window.location.href = '/products/categories'; } },
             { label: 'Brands', icon: 'pi pi-tags', command: () => { window.location.href = '/products/brands'; } }
         ]

@@ -1,17 +1,21 @@
 import { Button } from 'primereact/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PrimeBadge } from '../../../shared/common/PrimeBadge/PrimeBadge';
 import { InputNumber } from 'primereact/inputnumber';
 import { useParams } from 'react-router-dom';
-import { products } from '../Products/productHelper';
 import ImageSwitcher from './ImageSwitcher/ImageSwitcher';
+import { getProductById } from '../../store/actions/productAction/productAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1);
+    const product = useSelector((state) => state.user.productData.productDetailsById);
     const { id } = useParams();
+    const dispatch = useDispatch();
 
-    // In a real application, you would fetch the product details based on the ID
-    const product = products.find((p) => p.id === parseInt(id));
+    useEffect(() => {
+        dispatch(getProductById(id));
+    }, [id, dispatch]);
 
     if (!product) return (<h1>No Product Found</h1>);
 
@@ -43,17 +47,18 @@ export const ProductDetails = () => {
             <div className='grid mt-2'>
                 {/* Product Image */}
                 <div className='col-12 md:col-6'>
-                    <ImageSwitcher />
+                    <ImageSwitcher images={product.image_urls} />
                 </div>
 
                 {/* Product Info */}
                 <div className='col-12 md:col-6'>
+                    <h2>{product.title}</h2>
                     <p className='-mt-1'>
                         <strong>Category ID:</strong> {product.category_id} | <strong>Brand ID:</strong> {product.brand_id}
                     </p>
-
                     {/* Pricing Section */}
                     <div style={sectionStyle}>
+
                         <PrimeBadge value={"OFFER"} severity="warning" className="text-sm" />
 
                         <div className='flex justify-content-left align-items-center gap-2 mb-2 mt-2'>
