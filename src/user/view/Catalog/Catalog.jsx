@@ -26,7 +26,7 @@ export const Catalog = () => {
                 <div
                     key={item.id}
                     onClick={() => navigate(`productDetails/${item.id}`)}
-                    className="col-12 md:col-6 lg:col-4 xl:col-3 cursor-pointer w-10 md:w-2 lg:w-2 xl:w-2"
+                    className="col-12 md:col-6 lg:col-4 xl:col-3 cursor-pointer w-full md:w-2 lg:w-2 xl:w-2"
                 >
                     <PrimeCard
                         header={content.header}
@@ -44,8 +44,8 @@ export const Catalog = () => {
     return (
         <>
             {catalogsData.map((catalog) => (
-                <section key={catalog.id} className="p-3 mt-4" style={{ backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
-                    <div className="flex justify-content-between align-items-center mb-3">
+                <section key={catalog.id} className="pt-3 pb-3 mt-4" style={{ backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
+                    <div className="flex justify-content-between align-items-center mb-3 ml-2 mr-2">
                         <h3 className="m-0">{catalog.title}</h3>
                         <PrimeButton {...btnData[0]} />
                     </div>

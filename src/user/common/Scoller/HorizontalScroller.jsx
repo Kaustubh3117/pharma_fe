@@ -16,7 +16,7 @@ export const HorizontalScroller = ({ content }) => {
     return (
         <div className="scroller-container">
             <Button icon="pi pi-chevron-left" className="scroll-btn left" onClick={scrollLeft} />
-            <div className="scroller" ref={scrollerRef}>
+            <div className="scroller p-0 md:p-3" ref={scrollerRef}>
                 {content}
             </div>
 
