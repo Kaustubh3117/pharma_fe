@@ -70,7 +70,7 @@ export const Footer = () => {
                         </span>
                     ))}
                 </p>
-                <div style={{ marginTop: "15px", display: "flex", justifyContent: "center", gap: "15px" }}>
+                <div style={{ marginTop: "15px", paddingBottom: "10px", display: "flex", justifyContent: "center", gap: "15px" }}>
                     {socialLinks.map((social, idx) => (
                         <button
                             key={idx}
