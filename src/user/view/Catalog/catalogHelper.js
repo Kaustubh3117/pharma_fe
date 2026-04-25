@@ -45,5 +45,17 @@ export const catalogs = (products) => {
 
 
 export const btnData = [
-    { key: "1", label: "View All", outlined: true },
+    {
+        key: "1",
+        label: "",
+        icon: "pi pi-arrow-right",
+        outlined: true,
+        style: {
+            backgroundColor: "#1a1a1a",
+            color: "#fff",
+            height: "2rem",
+        },
+        tooltip: "View All",
+        tooltipOptions: { position: "left" }
+    },
 ];

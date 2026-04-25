@@ -1,6 +1,6 @@
 import { Button } from "primereact/button";
 
-export const PrimeButton = ({ label, icon, severity, onClick, style, iconPos, outlined }) => {
+export const PrimeButton = ({ label, icon, severity, onClick, style, iconPos, outlined, tooltip, tooltipOptions }) => {
     return (
         <Button
             key={label}
@@ -11,6 +11,8 @@ export const PrimeButton = ({ label, icon, severity, onClick, style, iconPos, ou
             style={style}
             onClick={onClick || (() => { })}
             outlined={outlined}
+            tooltip={tooltip}
+            tooltipOptions={tooltipOptions}
         />
     );
 };
