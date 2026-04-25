@@ -1,11 +1,11 @@
 import { Banner } from './Banner/Banner';
-import { Products } from './Products/Products';
+import { Catalog } from './Catalog/Catalog';
 
 export const UserHome = () => {
     return (
         <>
             <Banner />
-            <Products />
+            <Catalog />
         </>
     );
 }
