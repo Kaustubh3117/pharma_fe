@@ -30,7 +30,7 @@ export const ProductDetails = () => {
     ];
 
     const btnCollection = (
-        <div className='flex align-items-center justify-content-start mt-3 gap-3'>
+        <div className='flex align-items-start justify-content-start mt-3 gap-3'>
             {btnData.map((btn, index) => (
                 <PrimeButton {...btn} />
             ))}
@@ -56,14 +56,14 @@ export const ProductDetails = () => {
 
                         <PrimeBadge value={"OFFER"} severity="warning" className="text-sm" />
 
-                        <div className='flex justify-content-left align-items-center gap-2 mb-2 mt-2'>
-                            <div className="font-bold" style={{ fontSize: '2em', color: '#28a745' }}>
+                        <div className='flex justify-content-left align-items-center font-bold text-xl md:text-4xl gap-2 mb-2 mt-2'>
+                            <div style={{ color: '#28a745' }}>
                                 ₹{product.discount}% OFF
                             </div>
-                            <span className="line-through ml-2 text-700" style={{ fontSize: '2em', color: '#28a745' }}>
+                            <span className="line-through ml-2" style={{ color: "#9e9b9b" }}>
                                 ₹{product.old_price}
                             </span>
-                            <span className='font-bold' style={{ fontSize: '2em', color: '#28a745' }}>
+                            <span className='ml-2' style={{ color: '#28a745' }}>
                                 ₹{product.new_price}
                             </span>
                         </div>
