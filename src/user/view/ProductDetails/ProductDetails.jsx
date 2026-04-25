@@ -56,7 +56,7 @@ export const ProductDetails = () => {
 
                         <PrimeBadge value={"OFFER"} severity="warning" className="text-sm" />
 
-                        <div className='flex justify-content-left align-items-center font-bold text-xl md:text-4xl gap-2 mb-2 mt-2'>
+                        <div className='flex justify-content-left align-items-center font-bold text-xl sm:text-4xl gap-2 mb-2 mt-2'>
                             <div style={{ color: '#28a745' }}>
                                 ₹{product.discount}% OFF
                             </div>
