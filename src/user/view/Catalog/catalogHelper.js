@@ -32,3 +32,18 @@ export const cardContent = (item, navigate) => {
         subTitle: item?.new_price ? content : undefined,
     }
 }
+
+export const catalogs = (products) => {
+    return [
+        { id: 1, title: 'Products ', data: products?.products },
+        { id: 2, title: 'Popular Deals', data: products?.popular_deals },
+        { id: 3, title: 'Categories', data: products?.categories },
+        { id: 4, title: 'Brands', data: products?.brands },
+        { id: 5, title: 'You Might Also Like', data: products?.simple_recommendations },
+    ];
+}
+
+
+export const btnData = [
+    { key: "1", label: "View All", outlined: true },
+];

@@ -1,14 +1,12 @@
-import { Button } from 'primereact/button';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { PrimeBadge } from '../../../shared/common/PrimeBadge/PrimeBadge';
-import { InputNumber } from 'primereact/inputnumber';
 import { useParams } from 'react-router-dom';
 import ImageSwitcher from './ImageSwitcher/ImageSwitcher';
 import { getProductById } from '../../store/actions/productAction/productAction';
 import { useDispatch, useSelector } from 'react-redux';
+import { PrimeButton } from '../../../shared/common/PrimeButton/PrimeButton';
 
 export const ProductDetails = () => {
-    const [quantity, setQuantity] = useState(1);
     const product = useSelector((state) => state.user.productData.productDetailsById);
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -26,19 +24,16 @@ export const ProductDetails = () => {
         marginBottom: '20px'
     }
 
+    const btnData = [
+        { key: "1", label: "Add to Cart", icon: "pi pi-shopping-cart", iconPos: "left", action: () => console.log(`Added cart`), outlined: true },
+        { key: "2", label: "Buy Now", icon: "pi pi-credit-card", iconPos: "left", action: () => console.log(`Buying`), outlined: false },
+    ];
+
     const btnCollection = (
         <div className='flex align-items-center justify-content-start mt-3 gap-3'>
-            <Button
-                label="Add to Cart"
-                icon="pi pi-shopping-cart"
-                outlined={true}
-                onClick={() => console.log(`Added ${quantity} of ${product.title} to cart`)}
-            />
-            <Button
-                label="Buy Now"
-                icon="pi pi-credit-card"
-                onClick={() => console.log(`Buying ${quantity} of ${product.title}`)}
-            />
+            {btnData.map((btn, index) => (
+                <PrimeButton {...btn} />
+            ))}
         </div>
     );
 
@@ -46,12 +41,12 @@ export const ProductDetails = () => {
         <>
             <div className='grid mt-2'>
                 {/* Product Image */}
-                <div className='col-12 md:col-6'>
+                <div className='col-12 md:col-4'>
                     <ImageSwitcher images={product.image_urls} />
                 </div>
 
                 {/* Product Info */}
-                <div className='col-12 md:col-6'>
+                <div className='col-12 md:col-8'>
                     <h2>{product.title}</h2>
                     <p className='-mt-1'>
                         <strong>Category ID:</strong> {product.category_id} | <strong>Brand ID:</strong> {product.brand_id}
@@ -71,23 +66,6 @@ export const ProductDetails = () => {
                             <span className='font-bold' style={{ fontSize: '2em', color: '#28a745' }}>
                                 ₹{product.new_price}
                             </span>
-                        </div>
-                        {/* Quantity Selector */}
-                        <div className="flex-auto">
-                            <label htmlFor="horizontal-buttons" className="font-bold block mb-2">Quantity:</label>
-                            <InputNumber
-                                inputId="horizontal-buttons"
-                                value={quantity}
-                                onValueChange={(e) => setQuantity(e.value)}
-                                showButtons
-                                min={0}
-                                buttonLayout="horizontal"
-                                decrementButtonClassName="p-button-primary"
-                                incrementButtonClassName="p-button-primary"
-                                incrementButtonIcon="pi pi-plus"
-                                decrementButtonIcon="pi pi-minus"
-                                inputClassName="w-3rem"
-                            />
                         </div>
                         <p className='mt-3 -mb-2' style={{ color: "#9e9b9b" }}>
                             <strong>Price Per Quantity:</strong> ₹{product.price_per_quantity}

@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cardContent } from './catalogHelper';
-import { Button } from 'primereact/button';
+import { cardContent, catalogs, btnData } from './catalogHelper';
 
 // Shared Imports
 import { PrimeCard } from '../../../shared/common/PrimeCard/PrimeCard';
 import { getCombinedProductDetails } from '../../store/actions/productAction/productAction';
 import { HorizontalScroller } from '../../common/Scoller/HorizontalScroller';
+import { PrimeButton } from '../../../shared/common/PrimeButton/PrimeButton';
 
 export const Catalog = () => {
     const products = useSelector((state) => state.user.productData.combinedProductDetails);
@@ -19,14 +19,14 @@ export const Catalog = () => {
     }, [dispatch]);
 
     // Generic card builder
-    const buildCards = (items, type) =>
+    const buildCards = (items) =>
         items?.map((item) => {
             const content = cardContent(item, navigate);
             return (
                 <div
                     key={item.id}
                     onClick={() => navigate(`productDetails/${item.id}`)}
-                    className="col-12 md:col-6 lg:col-4 xl:col-3 cursor-pointer w-5 md:w-2 lg:w-2 xl:w-2"
+                    className="col-12 md:col-6 lg:col-4 xl:col-3 cursor-pointer w-8 md:w-2 lg:w-2 xl:w-2"
                 >
                     <PrimeCard
                         header={content.header}
@@ -39,23 +39,17 @@ export const Catalog = () => {
             );
         });
 
-    // Config-driven catalogs
-    const catalogs = [
-        { id: 1, title: 'View All Products', data: products?.products, type: 'product' },
-        { id: 2, title: 'View All Categories', data: products?.categories, type: 'category' },
-        { id: 3, title: 'View All Brands', data: products?.brands, type: 'brand' },
-        { id: 4, title: 'View All Popular Deals', data: products?.popular_deals, type: 'offer' },
-        { id: 5, title: 'You Might Also Like', data: products?.simple_recommendations, type: 'combo' },
-    ];
+    const catalogsData = catalogs(products);
 
     return (
         <>
-            {catalogs.map((catalog) => (
-                <section key={catalog.id} className="p-m-4">
-                    <div className="p-d-flex p-jc-end p-mb-3">
-                        <Button label={catalog.title} className="p-button-outlined" />
+            {catalogsData.map((catalog) => (
+                <section key={catalog.id} className="p-3 mt-4" style={{ backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
+                    <div className="flex justify-content-between align-items-center mb-3">
+                        <h3 className="m-0">{catalog.title}</h3>
+                        <PrimeButton {...btnData[0]} />
                     </div>
-                    <HorizontalScroller content={buildCards(catalog.data, catalog.type)} />
+                    <HorizontalScroller content={buildCards(catalog.data)} />
                 </section>
             ))}
         </>
