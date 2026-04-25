@@ -1,0 +1,31 @@
+.scroller-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.scroller {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.scroller::-webkit-scrollbar {
+    display: none;
+    /* hide scrollbar */
+}
+
+.scroll-btn {
+    position: absolute;
+    z-index: 1;
+}
+
+.scroll-btn.left {
+    left: 0;
+}
+
+.scroll-btn.right {
+    right: 0;
+}
