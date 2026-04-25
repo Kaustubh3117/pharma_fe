@@ -26,7 +26,7 @@ export const Catalog = () => {
                 <div
                     key={item.id}
                     onClick={() => navigate(`productDetails/${item.id}`)}
-                    className="col-12 md:col-6 lg:col-4 xl:col-3 cursor-pointer w-full sm:w-2 lg:w-2 xl:w-2"
+                    className="col-12 md:col-6 lg:col-4 xl:col-3 cursor-pointer w-full sm:w-4 lg:w-2 xl:w-2"
                 >
                     <PrimeCard
                         header={content.header}
