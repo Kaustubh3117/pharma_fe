@@ -2,13 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { catalogs, btnData } from './catalogHelper';
+import { catalogs, btnData, cardContent } from './catalogHelper';
 import { getCombinedCatalog } from '../../store/actions/catalogAction/catalogAction';
 
 // Shared Imports
 import { HorizontalScroller } from '../../common/Scoller/HorizontalScroller';
 import { PrimeButton } from '../../../shared/common/PrimeButton/PrimeButton';
-import { CardBuilder } from '../../common/CardBuilder/CardBuilder';
+import { PrimeCard } from '../../../shared/common/PrimeCard/PrimeCard';
 export const Catalog = () => {
     const combinedData = useSelector((state) => state.user.catalog.combinedCatalog);
     const navigate = useNavigate();
@@ -20,6 +20,29 @@ export const Catalog = () => {
 
     const catalogsData = catalogs(combinedData);
 
+    const cardBuilder = (items) => (
+        <>
+            {items?.map((item) => {
+                const content = cardContent(item);
+                return (
+                    <div
+                        key={item.id}
+                        onClick={() => navigate(item.url)}
+                        className="cursor-pointer w-full sm:w-4 lg:w-2 xl:w-2"
+                    >
+                        <PrimeCard
+                            header={content.header}
+                            title={content.title}
+                            subTitle={content.subTitle}
+                            content={content.content}
+                            footer={content.footer}
+                        />
+                    </div>
+                );
+            })}
+        </>
+    )
+
     return (
         <>
             {catalogsData.map((catalog) => (
@@ -28,7 +51,7 @@ export const Catalog = () => {
                         <h3 className="m-0">{catalog.title}</h3>
                         <PrimeButton {...btnData(catalog.catalogType, navigate)} />
                     </div>
-                    <HorizontalScroller content={<CardBuilder items={catalog.data} />} />
+                    <HorizontalScroller content={cardBuilder(catalog?.data)} />
                 </section>
             ))}
         </>

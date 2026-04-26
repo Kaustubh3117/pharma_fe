@@ -1,13 +1,15 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { CardBuilder } from "../../../common/CardBuilder/CardBuilder";
 import { getCatalog, getProductsByCatalogId } from "../../../store/actions/catalogAction/catalogAction";
+import { PrimeCard } from "../../../../shared/common/PrimeCard/PrimeCard";
+import { cardContent } from "../catalogHelper";
 
 export const CatalogView = () => {
     const catalog = useSelector((state) => state.user.catalog.catalog)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { catalogType, id } = useParams();
 
     useEffect(() => {
@@ -22,8 +24,25 @@ export const CatalogView = () => {
     return (
         <>
             <h1>All {catalogType}</h1>
-            <div className="flex justify-content-start align-items-start">
-                <CardBuilder items={catalog?.[catalogType]} />
+            <div className="grid">
+                {catalog?.[catalogType]?.map((item) => {
+                    const content = cardContent(item);
+                    return (
+                        <div
+                            key={item.id}
+                            onClick={() => navigate(item.url)}
+                            className="col-12 sm:col-2 lg:col-2 xl:col-2 cursor-pointer w-full sm:w-4 lg:w-2 xl:w-2"
+                        >
+                            <PrimeCard
+                                header={content.header}
+                                title={content.title}
+                                subTitle={content.subTitle}
+                                content={content.content}
+                                footer={content.footer}
+                            />
+                        </div>
+                    );
+                })}
             </div>
         </>
     )
