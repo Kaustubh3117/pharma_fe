@@ -5,6 +5,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import { UserHome } from './user/view/UserHome';
 import { ProductDetails } from './user/view/ProductDetails/ProductDetails';
 import { Navbar } from './user/common/Navbar/Navbar';
+import { CatalogView } from './user/view/Catalog/CatalogView/CatalogView';
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<UserHome />} />
-            <Route path="productDetails/:id" element={<ProductDetails />} />
+            <Route path="/productDetails/:id" element={<ProductDetails />} />
+            <Route path="/catalogView/:catalogType" element={<CatalogView />} />
+            <Route path="/catalogView/:catalogType/:id" element={<CatalogView />} />
           </Routes>
         </BrowserRouter>
       </Navbar>

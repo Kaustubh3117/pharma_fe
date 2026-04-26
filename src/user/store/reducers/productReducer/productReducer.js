@@ -1,17 +1,11 @@
-import { SET_COMBINED_PRODUCT_DETAILS, SET_PRODUCT_BY_ID } from "../../actionTypes/productConstants/productConstants";
+import { SET_PRODUCT_BY_ID } from "../../actionTypes/productConstants/productConstants";
 
 const initialStore = {
-    combinedProductDetails: null,
     productDetailsById: null,
 }
 
 const productReducer = (state = initialStore, action) => {
     switch (action.type) {
-        case SET_COMBINED_PRODUCT_DETAILS:
-            return {
-                ...state,
-                combinedProductDetails: action.payload,
-            };
         case SET_PRODUCT_BY_ID:
             return {
                 ...state,
