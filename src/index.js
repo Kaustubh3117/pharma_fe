@@ -13,10 +13,12 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import { PrimeToast } from './shared/common/PrimeToast/PrimeToast';
+import Loader from './shared/common/Loader/Loader';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={configStore}>
+    <Loader />
     <PrimeToast />
     <App />
   </Provider>

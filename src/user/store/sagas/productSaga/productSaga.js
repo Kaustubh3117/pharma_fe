@@ -5,15 +5,19 @@ import { environment } from "../../../environment";
 import { GET_PRODUCT_BY_ID, SET_PRODUCT_BY_ID } from "../../actionTypes/productConstants/productConstants";
 import { showToast } from "../../../../shared/utils/toastService";
 import { COMMON_ERROR_MESSAGE, TOAST_SUMMARY_ERROR } from "../../../../shared/constant/constants";
+import { SET_LOADER } from "../../../../shared/store/actionTypes/commonActionType";
 
 function* getProductByIdSaga(action) {
     try {
+        yield put({ type: SET_LOADER, data: true })
         const env_url = environment.products.getProductById.replace(':product_id', action.payload);
         const response = yield call(axios.get, env_url);
         yield put({ type: SET_PRODUCT_BY_ID, payload: response.data.data });
     } catch (error) {
         showToast("error", TOAST_SUMMARY_ERROR, COMMON_ERROR_MESSAGE);
         console.error('Error fetching product details by ID:', error);
+    } finally {
+        yield put({ type: SET_LOADER, data: false })
     }
 }
 
