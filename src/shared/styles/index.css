@@ -84,3 +84,87 @@ code {
 .custom-carousel .p-carousel-next {
   right: 20px;
 }
+
+
+/* Full screen dark blurred background */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* background-color: rgba(0, 0, 0, 0.95); */
+  background-color: rgb(24, 23, 23);
+  /* Deep dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  pointer-events: none;
+  /* disable pointer interactions */
+  cursor: not-allowed;
+  /* optional: keep the cursor style */
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  /* Space between the puff animation and the text */
+}
+
+/* ... (loader-overlay and loader-content remain the same) ... */
+.puff-loader {
+  width: 70px;
+  height: 70px;
+  position: relative;
+}
+
+/* Target all three rings: ::before, ::after, and the span */
+.puff-loader::before,
+.puff-loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 6px solid #ffffff;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  /* Start invisible */
+  animation: puff-effect 1.7s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+
+/* Ring 1 */
+.puff-loader::before {
+  animation-delay: 0s;
+}
+
+/* Ring 2 */
+.puff-loader::after {
+  animation-delay: -0.66s;
+}
+
+@keyframes puff-effect {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.5);
+    /* Slightly larger scale for better 3-ring depth */
+    opacity: 0;
+  }
+}
+
+.loader-text {
+  color: #ffffff;
+  font-family: sans-serif;
+  margin-top: 30px;
+  letter-spacing: 2px;
+  font-weight: 300;
+  padding-left: 15px;
+}
