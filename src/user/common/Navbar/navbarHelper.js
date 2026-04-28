@@ -1,6 +1,11 @@
 export const navItems = (navigate) => {
     return [
         {
+            label: <span className="font-bold text-xl">Pharma</span>,
+            icon: '',
+            command: () => { navigate("/") }
+        },
+        {
             label: 'Home',
             icon: 'pi pi-home',
             command: () => { navigate("/") }
@@ -18,8 +23,6 @@ export const navItems = (navigate) => {
         { label: 'Contact', icon: 'pi pi-envelope', command: () => { window.location.href = '/contact'; } }
     ];
 }
-
-export const start = <span className="font-bold text-xl">Pharma</span>;
 
 export const profileMenuItems = [
     { label: 'Kaustubh Patil', icon: 'pi pi-user' },

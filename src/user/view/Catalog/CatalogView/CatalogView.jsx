@@ -23,8 +23,7 @@ export const CatalogView = () => {
 
     return (
         <>
-            <h1>All {catalogType}</h1>
-            <div className="grid">
+            <div className="grid mt-4">
                 {catalog?.[catalogType]?.map((item) => {
                     const content = cardContent(item);
                     return (
