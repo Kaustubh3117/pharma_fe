@@ -5,11 +5,11 @@ const Loader = () => {
     return (
         <>
             {loading &&
-                <div class="loader-overlay">
-                    <div class="loader-content">
-                        <div class="puff-loader">
+                <div className="loader-overlay">
+                    <div className="loader-content">
+                        <div className="puff-loader">
                         </div>
-                        <p class="loader-text">Loading Please Wait...</p>
+                        <p className="loader-text">Loading Please Wait...</p>
                     </div>
                 </div>
             }

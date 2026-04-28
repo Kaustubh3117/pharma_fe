@@ -1,21 +1,23 @@
-export const items = [
-    {
-        label: 'Home',
-        icon: 'pi pi-home',
-        command: () => { window.location.href = '/'; }
-    },
-    {
-        label: 'Products',
-        icon: 'pi pi-box',
-        items: [
-            { label: 'All Products', icon: 'pi pi-box', command: () => { window.location.href = '/products'; } },
-            { label: 'Categories', icon: 'pi pi-list', command: () => { window.location.href = '/products/categories'; } },
-            { label: 'Brands', icon: 'pi pi-tags', command: () => { window.location.href = '/products/brands'; } }
-        ]
-    },
-    { label: 'About', icon: 'pi pi-info-circle', command: () => { window.location.href = '/about'; } },
-    { label: 'Contact', icon: 'pi pi-envelope', command: () => { window.location.href = '/contact'; } }
-];
+export const navItems = (navigate) => {
+    return [
+        {
+            label: 'Home',
+            icon: 'pi pi-home',
+            command: () => { navigate("/") }
+        },
+        {
+            label: 'Products',
+            icon: 'pi pi-box',
+            items: [
+                { label: 'All Products', icon: 'pi pi-box', command: () => { navigate("catalogView/products") } },
+                { label: 'Categories', icon: 'pi pi-list', command: () => { navigate("catalogView/categories") } },
+                { label: 'Brands', icon: 'pi pi-tags', command: () => { navigate("catalogView/brands") } }
+            ]
+        },
+        { label: 'About', icon: 'pi pi-info-circle', command: () => { window.location.href = '/about'; } },
+        { label: 'Contact', icon: 'pi pi-envelope', command: () => { window.location.href = '/contact'; } }
+    ];
+}
 
 export const start = <span className="font-bold text-xl">Pharma</span>;
 
