@@ -1,6 +1,6 @@
 import { Avatar } from 'primereact/avatar';
 
-export const PrimeAvatar = ({ label, size, shape, style, onClick }) => {
+export const PrimeAvatar = ({ label, size, shape, style, onClick, className }) => {
     return (
         <Avatar
             label={label}
@@ -8,6 +8,7 @@ export const PrimeAvatar = ({ label, size, shape, style, onClick }) => {
             style={style}
             shape={shape}
             onClick={onClick}
+            className={className}
         />
     );
 }

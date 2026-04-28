@@ -43,10 +43,10 @@ export const cardContent = (item) => {
 
     const content = (
         <div className="-mt-4 -ml-3">
-            <span style={{ color: '#999', textDecoration: 'line-through' }}>₹{item.old_price}</span>
             <div className='flex justify-content-start gap-2'>
-                <span className="text-lg font-weight-bold" style={{ color: '#1a7f3c' }}>₹{item.new_price}</span>
                 <PrimeBadge value={`${item.discount}% OFF`} severity="warning" className="text-sm" />
+                <span style={{ color: '#999', textDecoration: 'line-through' }}>₹{item.old_price}</span>
+                <span className="text-lg font-weight-bold" style={{ color: '#1a7f3c' }}>₹{item.new_price}</span>
             </div>
         </div>
     );
