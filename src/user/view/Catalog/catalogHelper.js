@@ -13,7 +13,6 @@ export const catalogs = (data) => {
 
 export const btnData = (catalogType, navigate) => {
     return {
-        key: "1",
         label: "",
         icon: "pi pi-arrow-right",
         outlined: true,

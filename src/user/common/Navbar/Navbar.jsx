@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 /* custom components */
 import { getCartCount } from '../../../user/store/actions/cartAction/cartAction';
-import { buttonConfigs, items, profileMenuItems, start } from './navbarHelper';
+import { buttonConfigs, navItems, profileMenuItems, start } from './navbarHelper';
 import { Footer } from '../Footer/Footer';
 
 /* prime react components */
@@ -14,8 +14,10 @@ import { Menu } from 'primereact/menu';
 import { PrimeBadge } from '../../../shared/common/PrimeBadge/PrimeBadge';
 import { PrimeAvatar } from '../../../shared/common/PrimeAvatar/PrimeAvatar';
 import { PrimeButton } from '../../../shared/common/PrimeButton/PrimeButton';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = ({ children }) => {
+    const navigate = useNavigate()
     const isAuthenticated = true; // Replace with actual auth logic
     const cartCount = useSelector((state) => state.user.cart.cartCount); // Replace with actual cart count from state
     const menuRef = useRef(null);
@@ -63,7 +65,7 @@ export const Navbar = ({ children }) => {
 
     return (
         <>
-            <Menubar model={items} start={start} end={end} className='border-noround' />
+            <Menubar model={navItems(navigate)} start={start} end={end} className='border-noround' />
             <div className='ml-2 mr-2'>
                 {children}
             </div>

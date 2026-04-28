@@ -49,7 +49,7 @@ export const Catalog = () => {
                 <section key={catalog.id} className="pt-3 pb-3 mt-4" style={{ backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
                     <div className="flex justify-content-between align-items-center mb-3 ml-2 mr-2">
                         <h3 className="m-0">{catalog.title}</h3>
-                        <PrimeButton {...btnData(catalog.catalogType, navigate)} />
+                        <PrimeButton key="1" {...btnData(catalog.catalogType, navigate)} />
                     </div>
                     <HorizontalScroller content={cardBuilder(catalog?.data)} />
                 </section>
