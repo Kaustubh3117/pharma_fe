@@ -58,14 +58,18 @@ export const Navbar = ({ children }) => {
         suggestionsData: products,
         placeholder: "Search products, brands, categories",
         optionLabel: "name",
+        className: "flex align-items-center justify-content-center",
     }
 
     const end = (
         <div className="flex align-items-center gap-3">
-            <i className="pi pi-search" style={{ fontSize: '2rem', cursor: 'pointer' }}
-                onClick={() => setShowSearch(!showSearch)} />
+            <i
+                className={`pi pi-search ${showSearch ? 'highlight-icon' : ''}`}
+                style={{ fontSize: '2rem', cursor: 'pointer' }}
+                onClick={() => setShowSearch(!showSearch)}
+            />
             {/* Cart Icon with Badge */}
-            <span className="p-overlay-badge" style={{ position: 'relative' }}>
+            <span className="p-overlay-badge mt-2" style={{ position: 'relative' }}>
                 <i className="pi pi-shopping-cart" style={{ fontSize: '2rem', cursor: 'pointer' }}
                     onClick={() => navigate("/cart")} />
                 <PrimeBadge value={cartCount} severity="danger" />
@@ -93,12 +97,8 @@ export const Navbar = ({ children }) => {
             <Menubar model={navItems(navigate)} end={end} className='border-noround' />
             {
                 showSearch &&
-                <div className='grid pt-2' style={{ backgroundColor: "#f9f9f9" }}>
-                    <div className='col'></div>
-                    <div className='col'>
-                        <PrimeAutoComplete {...autoCompleteValues} />
-                    </div>
-                    <div className='col'></div>
+                <div className='p-2' style={{ backgroundColor: "#f9f9f9" }}>
+                    <PrimeAutoComplete {...autoCompleteValues} />
                 </div>
             }
             <div className='ml-2 mr-2'>
