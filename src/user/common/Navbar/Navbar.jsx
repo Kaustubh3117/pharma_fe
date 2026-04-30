@@ -15,7 +15,7 @@ import { PrimeBadge } from '../../../shared/common/PrimeBadge/PrimeBadge';
 import { PrimeAvatar } from '../../../shared/common/PrimeAvatar/PrimeAvatar';
 import { PrimeButton } from '../../../shared/common/PrimeButton/PrimeButton';
 import { useNavigate } from 'react-router-dom';
-import { Dropdown } from 'primereact/dropdown';
+import { PrimeAutoComplete } from '../../../shared/common/PrimeAutoComplete/PrimeAutoComplete';
 
 export const Navbar = ({ children }) => {
     const navigate = useNavigate()
@@ -23,50 +23,53 @@ export const Navbar = ({ children }) => {
     const cartCount = useSelector((state) => state.user.cart.cartCount); // Replace with actual cart count from state
     const menuRef = useRef(null);
     const dispatch = useDispatch();
-    const [selectedCity, setSelectedCity] = useState(null);
-
+    const [selectedValue, setSelectedValue] = useState(null);
+    const [showSearch, setShowSearch] = useState(false)
 
     useEffect(() => {
         dispatch(getCartCount(1))
     }, [dispatch]);
 
 
-    const cities = [
-        { name: "New York", code: "NY" },
-        { name: "Rome", code: "RM" },
-        { name: "London", code: "LDN" },
-        { name: "Istanbul", code: "IST" },
-        { name: "Paris", code: "PRS" }
-    ];
-
     const avatarContent = {
         label: 'KP',
-        size: 'large',
-        // className= "w-12 h-12 bg-blue-500 text-white cursor-pointer",
-        style: { backgroundColor: '#2196F3', color: '#ffffff', cursor: 'pointer' },
+        style: {
+            backgroundColor: '#2196F3',
+            color: '#ffffff',
+            cursor: 'pointer',
+            height: "40px",
+            width: "40px"
+        },
         shape: 'circle',
         onClick: (e) => menuRef.current.toggle(e)
     }
 
+    const products = [
+        { name: "iPhone 15" },
+        { name: "Samsung Galaxy S25" },
+        { name: "Sony Headphones" },
+        { name: "Nike Shoes" },
+        { name: "Adidas Hoodie" },
+    ];
+
+    const autoCompleteValues = {
+        selectedValue,
+        setSelectedValue,
+        suggestionsData: products,
+        placeholder: "Search products, brands, categories",
+        optionLabel: "name",
+    }
+
     const end = (
         <div className="flex align-items-center gap-3">
-            <Dropdown
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.value)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="Filter By Product, Brand, Category"
-                className="w-full md:w-14rem"
-            />
-
+            <i className="pi pi-search" style={{ fontSize: '2rem', cursor: 'pointer' }}
+                onClick={() => setShowSearch(!showSearch)} />
             {/* Cart Icon with Badge */}
             <span className="p-overlay-badge" style={{ position: 'relative' }}>
                 <i className="pi pi-shopping-cart" style={{ fontSize: '2rem', cursor: 'pointer' }}
-                    onClick={() => window.location.href = '/cart'} />
+                    onClick={() => navigate("/cart")} />
                 <PrimeBadge value={cartCount} severity="danger" />
             </span>
-
             {/* Avatar with dropdown menu when authenticated */}
             {isAuthenticated && (
                 <>
@@ -74,7 +77,6 @@ export const Navbar = ({ children }) => {
                     <Menu model={profileMenuItems} popup ref={menuRef} />
                 </>
             )}
-
             {/* Login & Register Buttons if not authenticated */}
             {!isAuthenticated && (
                 <>
@@ -89,6 +91,16 @@ export const Navbar = ({ children }) => {
     return (
         <>
             <Menubar model={navItems(navigate)} end={end} className='border-noround' />
+            {
+                showSearch &&
+                <div className='grid pt-2' style={{ backgroundColor: "#f9f9f9" }}>
+                    <div className='col'></div>
+                    <div className='col'>
+                        <PrimeAutoComplete {...autoCompleteValues} />
+                    </div>
+                    <div className='col'></div>
+                </div>
+            }
             <div className='ml-2 mr-2'>
                 {children}
             </div>
