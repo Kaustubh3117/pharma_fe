@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Loader = () => {
     const loading = useSelector((state) => state.common.loading)
+    useEffect(() => {
+        if (loading) {
+            document.body.classList.add("no-scroll");
+        } else {
+            document.body.classList.remove("no-scroll");
+        }
+    }, [loading]);
     return (
         <>
             {loading &&
