@@ -93,3 +93,8 @@ code {
   /* slightly enlarge */
   transition: all 0.2s ease;
 }
+
+/* prime input number */
+.custom-inputnumber .p-inputtext {
+  width: 60px !important;
+}
