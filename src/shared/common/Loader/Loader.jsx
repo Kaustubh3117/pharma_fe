@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import "../Loader/loader.css"
 
 const Loader = () => {
     const loading = useSelector((state) => state.common.loading)
