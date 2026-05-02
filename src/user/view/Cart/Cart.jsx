@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
-import { PrimeCard } from "../../../shared/common/PrimeCard/PrimeCard";
 import { Chip } from 'primereact/chip'
 import { PrimeBadge } from "../../../shared/common/PrimeBadge/PrimeBadge";
 import "../Cart/cartStyle.css"
 
 export function Cart() {
+    const [quantity, setQuantity] = useState(2)
     const products = [
         { id: 1, name: "Paracetamol 500mg", price: 50, qty: 2 },
         { id: 2, name: "Vitamin C Tablets", price: 120, qty: 1 },
     ];
 
     const subtotal = products.reduce((sum, p) => sum + p.price * p.qty, 0);
-
-    const cardContent = (product) => (
+    /* product card  */
+    const productCardContent = (product) => (
         <div className="grid">
             <div className="col-4 sm:col-3">
                 <img
@@ -24,16 +24,17 @@ export function Cart() {
                 />
 
             </div>
-            <div className="col-8 sm:col-4 text-center -mt-4 sm:mt-0">
+            <div className="col-1 sm:col-2"></div>
+            <div className="col-6 sm:col-4 -mt-4 sm:mt-0">
                 <h4>{product.name}</h4>
                 <div>
                     <PrimeBadge value={`50% OFF`} severity="warning" className="text-sm" />
                     <span className="ml-2" style={{ color: '#999', textDecoration: 'line-through' }}>₹10</span>
                     <span className="text-lg font-weight-bold ml-2" style={{ color: '#1a7f3c' }}>₹20</span>
                 </div>
-                <p>Delivered By Mon May 5 </p>
                 <InputNumber
-                    value={product.qty}
+                    value={quantity}
+                    onValueChange={(e) => setQuantity(e.value)}
                     showButtons
                     buttonLayout="horizontal"
                     decrementButtonClassName="p-button-secondary"
@@ -43,6 +44,7 @@ export function Cart() {
                     min={0}
                     className="custom-inputnumber mt-2"
                 />
+                <p>Delivered By Mon May 5 </p>
             </div >
         </div >
     )
@@ -58,8 +60,9 @@ export function Cart() {
 
         </div>
     )
+    /* end of product conent */
 
-    // subtotal conent
+    // subtotal content
     const subTotalCardContent = (
         <>
             <div className="flex justify-between mb-2 gap-2">
@@ -78,7 +81,7 @@ export function Cart() {
     )
 
     const subTotalFooter = (
-        <div className="flex align-items-center sm:static fixed bottom-0 left-0 right-0 z-5">
+        <div className="flex align-items-center sm:static fixed bottom-0 mt-2 left-0 right-0 z-5">
             <Chip label={`Total Amount: ₹${(subtotal * 1.05).toFixed(2)}`} className="border-noround w-full h-3rem" />
             <Button
                 label="Place Order"
@@ -88,30 +91,32 @@ export function Cart() {
     )
 
     const subTotalTitle = (
-        <>
-            <h3>Price Details</h3>
-        </>
+        <h2 className="-mt-1">Price Details</h2>
     )
 
     return (
         <div className="grid">
             {/* left col */}
             <div className="col-12 sm:col-8">
-                <div>
-                    {products.map((product, index) => (
-                        <PrimeCard
-                            key={product.id}
-                            className="mt-2"
-                            content={cardContent(product)}
-                            footer={productFooter}
-                        />
-                    ))}
-                </div>
+                {products.map((product, index) => (
+                    <div className="shadow-2 border-round-md mt-2">
+                        <div className="p-2">
+                            {productCardContent(product)}
+                            {productFooter}
+                        </div>
+                    </div>
+                ))}
             </div>
 
             {/* left col */}
             <div className="col-12 sm:col-4 mt-2">
-                <PrimeCard title={subTotalTitle} content={subTotalCardContent} footer={subTotalFooter} />
+                <div className="shadow-2 border-round-md">
+                    <div className="p-2">
+                        {subTotalTitle}
+                        {subTotalCardContent}
+                        {subTotalFooter}
+                    </div>
+                </div>
             </div>
         </div>
     );
