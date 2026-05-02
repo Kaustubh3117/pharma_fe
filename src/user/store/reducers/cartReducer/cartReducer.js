@@ -1,7 +1,8 @@
-import { SET_CART_COUNT } from "../../actionTypes/cartConstants/cartConstants";
+import { SET_CART_COUNT, SET_CART_ITEMS } from "../../actionTypes/cartConstants/cartConstants";
 
 const initialState = {
     cartCount: 0,
+    cartItems: null
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -10,7 +11,12 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartCount: action.payload,
-            };
+            }
+        case SET_CART_ITEMS:
+            return {
+                ...state,
+                cartItems: action.payload
+            }
         default:
             return state;
     }

@@ -10,6 +10,7 @@ export const environment = {
     },
     cart: {
         getCartCount: `${apiURL}/carts/get_cart_count?user_id=:user_id`,
+        getCartItems: `${apiURL}/carts/get_cart_items?user_id=:user_id`,
     },
     catalog: {
         getCatalog: `${apiURL}/catalogs/catolog_view?catalog_type=:catalog_type`,
