@@ -1,0 +1,14 @@
+.responsive-img {
+    width: 100%;
+    height: 200px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .responsive-img {
+        width: 120px;
+        /* smaller width for mobile */
+        height: 170px;
+        /* smaller height for mobile */
+    }
+}
