@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { Chip } from 'primereact/chip'
 import { PrimeBadge } from "../../../shared/common/PrimeBadge/PrimeBadge";
 import "../Cart/cartStyle.css"
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems, removeCartItem } from "../../store/actions/cartAction/cartAction";
 
 export function Cart() {
+    const cartItems = useSelector((state) => state.user.cart.cartItems)
+    const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(2)
-    const products = [
-        { id: 1, name: "Paracetamol 500mg", price: 50, qty: 2 },
-        { id: 2, name: "Vitamin C Tablets", price: 120, qty: 1 },
-    ];
 
-    const subtotal = products.reduce((sum, p) => sum + p.price * p.qty, 0);
+    useEffect(() => {
+        const user_id = 1;
+        dispatch(getCartItems(user_id))
+    }, [dispatch])
+
+    const subtotal = cartItems?.reduce((sum, p) => sum + p.product.new_price * p.quantity, 0);
+    const totalDiscount = cartItems?.reduce((total, item) => {
+        const oldPrice = item.product.old_price;
+        const newPrice = item.product.new_price;
+        const qty = item.quantity;
+
+        return total + ((oldPrice - newPrice) * qty);
+    }, 0);
+
+    const deleteCartItem = (product_id) => {
+        const payload = {
+            user_id: 1,
+            product_id: product_id
+        }
+        dispatch(removeCartItem(payload))
+    }
+
     /* product card  */
     const productCardContent = (product) => (
         <div className="grid">
@@ -26,14 +47,14 @@ export function Cart() {
             </div>
             <div className="col-1 sm:col-2"></div>
             <div className="col-6 sm:col-4 -mt-4 sm:mt-0">
-                <h4>{product.name}</h4>
+                <h4>{product.title}</h4>
                 <div>
-                    <PrimeBadge value={`50% OFF`} severity="warning" className="text-sm" />
-                    <span className="ml-2" style={{ color: '#999', textDecoration: 'line-through' }}>₹10</span>
-                    <span className="text-lg font-weight-bold ml-2" style={{ color: '#1a7f3c' }}>₹20</span>
+                    <PrimeBadge value={`${product.discount}% OFF`} severity="warning" className="text-sm" />
+                    <span className="ml-2" style={{ color: '#999', textDecoration: 'line-through' }}>{`₹${product.old_price}`}</span>
+                    <span className="text-lg font-weight-bold ml-2" style={{ color: '#1a7f3c' }}>{`₹${product.new_price}`}</span>
                 </div>
                 <InputNumber
-                    value={quantity}
+                    value={product.quantity}
                     onValueChange={(e) => setQuantity(e.value)}
                     showButtons
                     buttonLayout="horizontal"
@@ -49,13 +70,20 @@ export function Cart() {
         </div >
     )
 
-    const productFooter = (
+    const productFooter = (productId) => (
         <div className="grid">
             <div className="col">
                 <Button label="Buy Now" text raised className="w-full" />
             </div>
             <div className="col">
-                <Button severity="secondary" className="w-full" label="Remove" text raised />
+                <Button
+                    severity="secondary"
+                    className="w-full"
+                    label="Remove"
+                    text
+                    raised
+                    onClick={() => deleteCartItem(productId)}
+                />
             </div>
 
         </div>
@@ -71,18 +99,17 @@ export function Cart() {
             </div>
             <div className="flex justify-between mb-2 gap-2">
                 <span>Discount: </span>
-                <span>₹{(subtotal * 0.05).toFixed(2)}</span>
+                <span style={{ color: "#6cc66c" }}>-₹{totalDiscount}</span>
             </div>
             <div className="flex justify-between mb-2 gap-2">
-                <span>Platform Fees: </span>
-                <span>₹{subtotal}</span>
+                <span>Inclusive of all taxes</span>
             </div>
         </>
     )
 
     const subTotalFooter = (
         <div className="flex align-items-center sm:static fixed bottom-0 mt-2 left-0 right-0 z-5">
-            <Chip label={`Total Amount: ₹${(subtotal * 1.05).toFixed(2)}`} className="border-noround w-full h-3rem" />
+            <Chip label={`Total: ₹${(subtotal * 1.05).toFixed(2)}`} className="border-noround w-full h-3rem" />
             <Button
                 label="Place Order"
                 className="p-button-success border-noround h-3rem w-8"
@@ -98,11 +125,11 @@ export function Cart() {
         <div className="grid">
             {/* left col */}
             <div className="col-12 sm:col-8">
-                {products.map((product, index) => (
+                {cartItems?.map((item, index) => (
                     <div className="shadow-2 border-round-md mt-2">
                         <div className="p-2">
-                            {productCardContent(product)}
-                            {productFooter}
+                            {productCardContent(item.product)}
+                            {productFooter(item.product.id)}
                         </div>
                     </div>
                 ))}

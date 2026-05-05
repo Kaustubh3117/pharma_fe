@@ -5,6 +5,7 @@ import ImageSwitcher from './ImageSwitcher/ImageSwitcher';
 import { getProductById } from '../../store/actions/productAction/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { PrimeButton } from '../../../shared/common/PrimeButton/PrimeButton';
+import { addItemToCart } from '../../store/actions/cartAction/cartAction';
 
 export const ProductDetails = () => {
     const product = useSelector((state) => state.user.productData.productDetailsById);
@@ -17,6 +18,17 @@ export const ProductDetails = () => {
 
     if (!product) return (<h1>No Product Found</h1>);
 
+    const addProductTocart = () => {
+        //here we will always send quantity as  static 1 dont change it
+        const payload = {
+            user_id: 1,
+            product_id: Math.floor(id),
+            quantity: 1,
+        }
+
+        dispatch(addItemToCart(payload))
+    }
+
     const sectionStyle = {
         backgroundColor: '#f9f9f9',
         padding: '20px',
@@ -25,8 +37,8 @@ export const ProductDetails = () => {
     }
 
     const btnData = [
-        { key: "1", label: "Add to Cart", icon: "pi pi-shopping-cart", iconPos: "left", action: () => console.log(`Added cart`), outlined: true },
-        { key: "2", label: "Buy Now", icon: "pi pi-credit-card", iconPos: "left", action: () => console.log(`Buying`), outlined: false },
+        { key: "1", label: "Add to Cart", icon: "pi pi-shopping-cart", iconPos: "left", onClick: () => addProductTocart(), outlined: true },
+        { key: "2", label: "Buy Now", icon: "pi pi-credit-card", iconPos: "left", onClick: () => console.log(`Buying`), outlined: false },
     ];
 
     const btnCollection = (
