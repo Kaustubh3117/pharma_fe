@@ -5,7 +5,7 @@ import { Chip } from 'primereact/chip'
 import { PrimeBadge } from "../../../shared/common/PrimeBadge/PrimeBadge";
 import "../Cart/cartStyle.css"
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems } from "../../store/actions/cartAction/cartAction";
+import { getCartItems, removeCartItem } from "../../store/actions/cartAction/cartAction";
 
 export function Cart() {
     const cartItems = useSelector((state) => state.user.cart.cartItems)
@@ -18,13 +18,21 @@ export function Cart() {
     }, [dispatch])
 
     const subtotal = cartItems?.reduce((sum, p) => sum + p.product.new_price * p.quantity, 0);
-    const totalDiscount = cartItems.reduce((total, item) => {
+    const totalDiscount = cartItems?.reduce((total, item) => {
         const oldPrice = item.product.old_price;
         const newPrice = item.product.new_price;
         const qty = item.quantity;
 
         return total + ((oldPrice - newPrice) * qty);
     }, 0);
+
+    const deleteCartItem = (product_id) => {
+        const payload = {
+            user_id: 1,
+            product_id: product_id
+        }
+        dispatch(removeCartItem(payload))
+    }
 
     /* product card  */
     const productCardContent = (product) => (
@@ -62,13 +70,20 @@ export function Cart() {
         </div >
     )
 
-    const productFooter = (
+    const productFooter = (productId) => (
         <div className="grid">
             <div className="col">
                 <Button label="Buy Now" text raised className="w-full" />
             </div>
             <div className="col">
-                <Button severity="secondary" className="w-full" label="Remove" text raised />
+                <Button
+                    severity="secondary"
+                    className="w-full"
+                    label="Remove"
+                    text
+                    raised
+                    onClick={() => deleteCartItem(productId)}
+                />
             </div>
 
         </div>
@@ -114,7 +129,7 @@ export function Cart() {
                     <div className="shadow-2 border-round-md mt-2">
                         <div className="p-2">
                             {productCardContent(item.product)}
-                            {productFooter}
+                            {productFooter(item.product.id)}
                         </div>
                     </div>
                 ))}

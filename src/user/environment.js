@@ -11,6 +11,8 @@ export const environment = {
     cart: {
         getCartCount: `${apiURL}/carts/get_cart_count?user_id=:user_id`,
         getCartItems: `${apiURL}/carts/get_cart_items?user_id=:user_id`,
+        addItemToCart: `${apiURL}/carts/add_to_cart`,
+        removeCartItem: `${apiURL}/carts/remove_cart_item`
     },
     catalog: {
         getCatalog: `${apiURL}/catalogs/catolog_view?catalog_type=:catalog_type`,
