@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "primereact/button";
-import { InputNumber } from "primereact/inputnumber";
 import { Chip } from 'primereact/chip'
 import { PrimeBadge } from "../../../shared/common/PrimeBadge/PrimeBadge";
 import "../Cart/cartStyle.css"
 import { useDispatch, useSelector } from "react-redux";
 import { getCartItems, removeCartItem } from "../../store/actions/cartAction/cartAction";
+import QuantityForm from "./forms/QuantityForm";
 
 export function Cart() {
     const cartItems = useSelector((state) => state.user.cart.cartItems)
     const dispatch = useDispatch()
-    const [quantity, setQuantity] = useState(2)
 
     useEffect(() => {
         const user_id = 1;
@@ -35,7 +34,7 @@ export function Cart() {
     }
 
     /* product card  */
-    const productCardContent = (product) => (
+    const productCardContent = (product, quantity) => (
         <div className="grid">
             <div className="col-4 sm:col-3">
                 <img
@@ -53,18 +52,7 @@ export function Cart() {
                     <span className="ml-2" style={{ color: '#999', textDecoration: 'line-through' }}>{`₹${product.old_price}`}</span>
                     <span className="text-lg font-weight-bold ml-2" style={{ color: '#1a7f3c' }}>{`₹${product.new_price}`}</span>
                 </div>
-                <InputNumber
-                    value={product.quantity}
-                    onValueChange={(e) => setQuantity(e.value)}
-                    showButtons
-                    buttonLayout="horizontal"
-                    decrementButtonClassName="p-button-secondary"
-                    incrementButtonClassName="p-button-secondary"
-                    incrementButtonIcon="pi pi-plus"
-                    decrementButtonIcon="pi pi-minus"
-                    min={0}
-                    className="custom-inputnumber mt-2"
-                />
+                <QuantityForm quantity={quantity} />
                 <p>Delivered By Mon May 5 </p>
             </div >
         </div >
@@ -123,19 +111,19 @@ export function Cart() {
 
     return (
         <div className="grid">
-            {/* left col */}
+            {/* product card section on left */}
             <div className="col-12 sm:col-8">
                 {cartItems?.map((item, index) => (
                     <div className="shadow-2 border-round-md mt-2">
                         <div className="p-2">
-                            {productCardContent(item.product)}
+                            {productCardContent(item.product, item.quantity)}
                             {productFooter(item.product.id)}
                         </div>
                     </div>
                 ))}
             </div>
 
-            {/* left col */}
+            {/* subtotal card section on right */}
             <div className="col-12 sm:col-4 mt-2">
                 <div className="shadow-2 border-round-md">
                     <div className="p-2">
