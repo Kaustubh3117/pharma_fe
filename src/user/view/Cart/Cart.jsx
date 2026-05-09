@@ -16,6 +16,8 @@ export function Cart() {
         dispatch(getCartItems(user_id))
     }, [dispatch])
 
+    const userId = 1;
+
     const subtotal = cartItems?.reduce((sum, p) => sum + p.product.new_price * p.quantity, 0);
     const totalDiscount = cartItems?.reduce((total, item) => {
         const oldPrice = item.product.old_price;
@@ -27,7 +29,7 @@ export function Cart() {
 
     const deleteCartItem = (product_id) => {
         const payload = {
-            user_id: 1,
+            user_id: userId,
             product_id: product_id
         }
         dispatch(removeCartItem(payload))
@@ -52,7 +54,7 @@ export function Cart() {
                     <span className="ml-2" style={{ color: '#999', textDecoration: 'line-through' }}>{`₹${product.old_price}`}</span>
                     <span className="text-lg font-weight-bold ml-2" style={{ color: '#1a7f3c' }}>{`₹${product.new_price}`}</span>
                 </div>
-                <QuantityForm quantity={quantity} />
+                <QuantityForm quantity={quantity} productId={product.id} userId={userId} quantityPerUser={product.quantity_per_user} />
                 <p>Delivered By Mon May 5 </p>
             </div >
         </div >
@@ -114,7 +116,7 @@ export function Cart() {
             {/* product card section on left */}
             <div className="col-12 sm:col-8">
                 {cartItems?.map((item, index) => (
-                    <div className="shadow-2 border-round-md mt-2">
+                    <div key={index} className="shadow-2 border-round-md mt-2">
                         <div className="p-2">
                             {productCardContent(item.product, item.quantity)}
                             {productFooter(item.product.id)}

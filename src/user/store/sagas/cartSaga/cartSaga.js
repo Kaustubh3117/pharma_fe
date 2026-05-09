@@ -2,7 +2,7 @@ import axios from "axios";
 import { put, takeLatest, call } from "redux-saga/effects";
 
 import { environment } from "../../../environment";
-import { ADD_ITEM_TO_CART, GET_CART_COUNT, GET_CART_ITEMS, REMOVE_CART_ITEM, SET_CART_COUNT, SET_CART_ITEMS } from "../../actionTypes/cartConstants/cartConstants";
+import { ADD_ITEM_TO_CART, GET_CART_COUNT, GET_CART_ITEMS, REMOVE_CART_ITEM, SET_CART_COUNT, SET_CART_ITEMS, UPDATE_CART_ITEM_QUANTITY } from "../../actionTypes/cartConstants/cartConstants";
 import { showToast } from "../../../../shared/utils/toastService";
 import { COMMON_ERROR_MESSAGE, TOAST_SUMMARY_ERROR } from "../../../../shared/constant/constants";
 import { SET_LOADER } from "../../../../shared/store/actionTypes/commonActionType";
@@ -56,10 +56,26 @@ function* removeCartItem(action) {
     }
 }
 
+function* updateCartItemQuantity(action) {
+    try {
+        const response = yield call(axios.put, environment.cart.updateCartItemQuantity, action.payload)
+        if (response.data.success) {
+            yield put({ type: GET_CART_ITEMS, payload: action.payload.user_id })
+        }
+        else {
+            showToast("", "", response.data.message || COMMON_ERROR_MESSAGE);
+        }
+    } catch (error) {
+        showToast("error", TOAST_SUMMARY_ERROR, COMMON_ERROR_MESSAGE);
+        console.error("Error Updating Cart Item Quantity:", error);
+    }
+}
+
 
 export default function* watchCartSaga() {
     yield takeLatest(GET_CART_COUNT, getCartCountSaga);
     yield takeLatest(GET_CART_ITEMS, getCartItemsSaga);
     yield takeLatest(ADD_ITEM_TO_CART, addItemToCart);
     yield takeLatest(REMOVE_CART_ITEM, removeCartItem);
+    yield takeLatest(UPDATE_CART_ITEM_QUANTITY, updateCartItemQuantity);
 }
