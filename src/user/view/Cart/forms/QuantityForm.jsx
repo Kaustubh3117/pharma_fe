@@ -25,11 +25,10 @@ export default function QuantityForm({ quantity, productId, userId, quantityPerU
     };
 
     const handleQuantityChange = (value) => {
-        if (value && value <= quantityPerUser) {
+        if (value === quantityPerUser) {
+            showToast("", "", `You can only add up to ${quantityPerUser} items for this product.`);
+        } else if (value && value <= quantityPerUser) {
             updateQuantity(value);
-            if (value === quantityPerUser) {
-                showToast("", "", `You can only add up to ${quantityPerUser} items for this product.`);
-            }
         }
     };
 

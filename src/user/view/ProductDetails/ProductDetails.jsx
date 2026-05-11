@@ -37,14 +37,14 @@ export const ProductDetails = () => {
     }
 
     const btnData = [
-        { key: "1", label: "Add to Cart", icon: "pi pi-shopping-cart", iconPos: "left", onClick: () => addProductTocart(), outlined: true },
+        { key: "1", label: "Add to Cart", icon: "pi pi-shopping-cart", iconPos: "left", onClick: () => addProductTocart(), outlined: true, disabled: !product.quantity },
         { key: "2", label: "Buy Now", icon: "pi pi-credit-card", iconPos: "left", onClick: () => console.log(`Buying`), outlined: false },
     ];
 
     const btnCollection = (
         <div className='flex align-items-start justify-content-start mt-3 gap-3'>
             {btnData.map((btn, index) => (
-                <PrimeButton {...btn} />
+                <PrimeButton key={index} {...btn} />
             ))}
         </div>
     );
@@ -82,6 +82,8 @@ export const ProductDetails = () => {
                         <p className='mt-3 -mb-2' style={{ color: "#9e9b9b" }}>
                             <strong>Price Per Quantity:</strong> ₹{product.price_per_quantity}
                         </p>
+                        <p className="text-lg font-weight-bold ml-2" style={product.quantity ? { color: '#1a7f3c' } : { color: '#d51616' }}>{product.quantity ? "In Stock" : "Out of Stock"}</p>
+
                     </div>
                     {btnCollection}
                 </div>
