@@ -6,10 +6,12 @@ import "../Cart/cartStyle.css"
 import { useDispatch, useSelector } from "react-redux";
 import { getCartItems, removeCartItem } from "../../store/actions/cartAction/cartAction";
 import QuantityForm from "./forms/QuantityForm";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Cart() {
     const cartItems = useSelector((state) => state.user.cart.cartItems)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const user_id = 1;
@@ -38,32 +40,38 @@ export function Cart() {
     /* product card  */
     const productCardContent = (product, quantity) => (
         <div className="grid">
-            <div className="col-4 sm:col-3">
+            <div className="col-4 sm:col-3 cursor-pointer" onClick={() => navigate(`/productDetails/${product.id}`)}>
                 <img
                     src={"https://picsum.photos/300/200?random=70"}
                     alt={"https://picsum.photos/300/200?random=70"}
                     className="responsive-img"
                 />
-
             </div>
             <div className="col-1 sm:col-2"></div>
             <div className="col-6 sm:col-4 -mt-4 sm:mt-0">
-                <h4>{product.title}</h4>
+                <Link to={`/productDetails/${product.id}`} className="text-lg text-900 no-underline"><b>{product.title}</b></Link>
                 <div>
                     <PrimeBadge value={`${product.discount}% OFF`} severity="warning" className="text-sm" />
                     <span className="ml-2" style={{ color: '#999', textDecoration: 'line-through' }}>{`₹${product.old_price}`}</span>
                     <span className="text-lg font-weight-bold ml-2" style={{ color: '#1a7f3c' }}>{`₹${product.new_price}`}</span>
                 </div>
                 <QuantityForm quantity={quantity} productId={product.id} userId={userId} quantityPerUser={product.quantity_per_user} />
+                <p className="text-lg font-weight-bold ml-2" style={product.quantity_per_user ? { color: '#1a7f3c' } : { color: '#d51616' }}>{product.quantity_per_user ? "In Stock" : "Out of Stock"}</p>
                 <p>Delivered By Mon May 5 </p>
             </div >
         </div >
     )
 
-    const productFooter = (productId) => (
+    const productFooter = (product) => (
         <div className="grid">
             <div className="col">
-                <Button label="Buy Now" text raised className="w-full" />
+                <Button
+                    label="Buy Now"
+                    text
+                    raised
+                    className="w-full"
+                    disabled={!product.quantity_per_user}
+                />
             </div>
             <div className="col">
                 <Button
@@ -72,7 +80,7 @@ export function Cart() {
                     label="Remove"
                     text
                     raised
-                    onClick={() => deleteCartItem(productId)}
+                    onClick={() => deleteCartItem(product.id)}
                 />
             </div>
 
@@ -119,7 +127,7 @@ export function Cart() {
                     <div key={index} className="shadow-2 border-round-md mt-2">
                         <div className="p-2">
                             {productCardContent(item.product, item.quantity)}
-                            {productFooter(item.product.id)}
+                            {productFooter(item.product)}
                         </div>
                     </div>
                 ))}
