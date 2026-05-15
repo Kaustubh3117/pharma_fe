@@ -9,13 +9,13 @@ import { CatalogView } from './user/view/Catalog/CatalogView/CatalogView';
 import { About } from './user/view/About/About';
 import { Contact } from './user/view/Contact/Contact';
 import { Cart } from './user/view/Cart/Cart';
+import { Checkout } from './user/view/Checkout/Checkout';
 
 function App() {
   return (
     <BrowserRouter>
       <PrimeReactProvider>
         <Navbar>
-
           <Routes>
             <Route path="/" element={<UserHome />} />
             <Route path="/productDetails/:id" element={<ProductDetails />} />
@@ -24,6 +24,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </Navbar>
       </PrimeReactProvider>

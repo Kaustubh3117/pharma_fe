@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "primereact/button";
-import { Chip } from 'primereact/chip'
 import { PrimeBadge } from "../../../shared/common/PrimeBadge/PrimeBadge";
+import { PriceDetails } from "../../common/PriceDetails/PriceDetails";
 import "../Cart/cartStyle.css"
 import { useDispatch, useSelector } from "react-redux";
 import { getCartItems, removeCartItem } from "../../store/actions/cartAction/cartAction";
 import QuantityForm from "./forms/QuantityForm";
 import { Link, useNavigate } from "react-router-dom";
+import { Checkout } from "../Checkout/Checkout";
 
 export function Cart() {
     const cartItems = useSelector((state) => state.user.cart.cartItems)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [showCheckoutModal, setShowCheckoutModal] = useState(false);
 
     useEffect(() => {
         const user_id = 1;
@@ -19,15 +21,6 @@ export function Cart() {
     }, [dispatch])
 
     const userId = 1;
-
-    const subtotal = cartItems?.reduce((sum, p) => sum + p.product.new_price * p.quantity, 0);
-    const totalDiscount = cartItems?.reduce((total, item) => {
-        const oldPrice = item.product.old_price;
-        const newPrice = item.product.new_price;
-        const qty = item.quantity;
-
-        return total + ((oldPrice - newPrice) * qty);
-    }, 0);
 
     const deleteCartItem = (product_id) => {
         const payload = {
@@ -71,6 +64,7 @@ export function Cart() {
                     raised
                     className="w-full"
                     disabled={!product.quantity_per_user}
+                    onClick={() => setShowCheckoutModal(true)}
                 />
             </div>
             <div className="col">
@@ -88,61 +82,32 @@ export function Cart() {
     )
     /* end of product conent */
 
-    // subtotal content
-    const subTotalCardContent = (
-        <>
-            <div className="flex justify-between mb-2 gap-2">
-                <span>Price:</span>
-                <span>₹{subtotal}</span>
-            </div>
-            <div className="flex justify-between mb-2 gap-2">
-                <span>Discount: </span>
-                <span style={{ color: "#6cc66c" }}>-₹{totalDiscount}</span>
-            </div>
-            <div className="flex justify-between mb-2 gap-2">
-                <span>Inclusive of all taxes</span>
-            </div>
-        </>
-    )
-
-    const subTotalFooter = (
-        <div className="flex align-items-center sm:static fixed bottom-0 mt-2 left-0 right-0 z-5">
-            <Chip label={`Total: ₹${(subtotal * 1.05).toFixed(2)}`} className="border-noround w-full h-3rem" />
-            <Button
-                label="Place Order"
-                className="p-button-success border-noround h-3rem w-8"
-            />
-        </div>
-    )
-
-    const subTotalTitle = (
-        <h2 className="-mt-1">Price Details</h2>
-    )
-
     return (
-        <div className="grid">
-            {/* product card section on left */}
-            <div className="col-12 sm:col-8">
-                {cartItems?.map((item, index) => (
-                    <div key={index} className="shadow-2 border-round-md mt-2">
-                        <div className="p-2">
-                            {productCardContent(item.product, item.quantity)}
-                            {productFooter(item.product)}
+        <>
+            <Checkout visible={showCheckoutModal} setVisible={setShowCheckoutModal} />
+            <div className="grid">
+                {/* product card section on left */}
+                <div className="col-12 sm:col-8">
+                    {cartItems?.map((item, index) => (
+                        <div key={index} className="shadow-2 border-round-md mt-2">
+                            <div className="p-2">
+                                {productCardContent(item.product, item.quantity)}
+                                {productFooter(item.product)}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
 
-            {/* subtotal card section on right */}
-            <div className="col-12 sm:col-4 mt-2">
-                <div className="shadow-2 border-round-md">
-                    <div className="p-2">
-                        {subTotalTitle}
-                        {subTotalCardContent}
-                        {subTotalFooter}
-                    </div>
+                {/* subtotal card section on right */}
+                <div className="col-12 sm:col-4 mt-2">
+                    <PriceDetails
+                        cartItems={cartItems}
+                        title="Price Details"
+                        showButtons={true}
+                        onPlaceOrder={() => setShowCheckoutModal(true)}
+                    />
                 </div>
             </div>
-        </div>
+        </>
     );
 }
