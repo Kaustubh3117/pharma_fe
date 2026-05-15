@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { PrimeBadge } from '../../../shared/common/PrimeBadge/PrimeBadge';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ImageSwitcher from './ImageSwitcher/ImageSwitcher';
 import { getProductById } from '../../store/actions/productAction/productAction';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ export const ProductDetails = () => {
     const product = useSelector((state) => state.user.productData.productDetailsById);
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getProductById(id));
@@ -38,7 +39,7 @@ export const ProductDetails = () => {
 
     const btnData = [
         { key: "1", label: "Add to Cart", icon: "pi pi-shopping-cart", iconPos: "left", onClick: () => addProductTocart(), outlined: true, disabled: !product.quantity },
-        { key: "2", label: "Buy Now", icon: "pi pi-credit-card", iconPos: "left", onClick: () => console.log(`Buying`), outlined: false },
+        { key: "2", label: "Buy Now", icon: "pi pi-credit-card", iconPos: "left", onClick: () => navigate("/checkout"), outlined: false, disabled: !product.quantity },
     ];
 
     const btnCollection = (
