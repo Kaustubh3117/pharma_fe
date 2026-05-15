@@ -2,10 +2,6 @@ import { shippingFields } from "../addressHelper";
 import { useForm } from "react-hook-form";
 import { FormController } from "../../../../shared/common/FormController/FormController";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
-import { Checkbox } from "primereact/checkbox";
-import { classNames } from "primereact/utils";
 import { formFields } from "../../../../shared/common/FormFields/formFields";
 
 export const AddAddress = () => {
